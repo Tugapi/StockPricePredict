@@ -1,10 +1,10 @@
 import torch.nn as nn
 
 
-class lstm(nn.Module):
+class LSTM(nn.Module):
 
     def __init__(self, input_size=8, hidden_size=32, num_layers=1 , output_size=1 , dropout=0, batch_first=True):
-        super(lstm, self).__init__()
+        super(LSTM, self).__init__()
         # lstm的输入 #batch,seq_len, input_size
         self.hidden_size = hidden_size
         self.input_size = input_size

@@ -1,4 +1,4 @@
-from LSTMModel import lstm
+from LSTMModel import LSTM
 from dataset import getData
 from options import args
 import torch
@@ -6,13 +6,13 @@ import torch
 
 def eval():
     # model = torch.load(args.save_file)
-    model = lstm(input_size=args.input_size, hidden_size=args.hidden_size, num_layers=args.layers , output_size=1)
+    model = LSTM(input_size=args.input_size, hidden_size=args.hidden_size, num_layers=args.layers, output_size=1)
     model.to(args.device)
     checkpoint = torch.load(args.save_file)
     model.load_state_dict(checkpoint['state_dict'])
     preds = []
     labels = []
-    close_max, close_min, train_loader, test_loader = getData(args.corpusFile, args.sequence_length, args.batch_size)
+    close_max, close_min, _, test_loader = getData(args.corpusFile, args.sequence_length, args.prediction_length, args.batch_size, args.train_ratio)
     for idx, (x, label) in enumerate(test_loader):
         if args.useGPU:
             x = x.squeeze(1).cuda()  # batch_size,seq_len,input_size

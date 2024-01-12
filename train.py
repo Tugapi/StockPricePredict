@@ -1,18 +1,18 @@
 from torch.autograd import Variable
 import torch.nn as nn
 import torch
-from LSTMModel import lstm
+from LSTMModel import LSTM
 from options import args
 from dataset import getData
 
 def train():
 
-    model = lstm(input_size=args.input_size, hidden_size=args.hidden_size, num_layers=args.layers , output_size=1, dropout=args.dropout, batch_first=args.batch_first )
+    model = LSTM(input_size=args.input_size, hidden_size=args.hidden_size, num_layers=args.layers, output_size=1, dropout=args.dropout, batch_first=args.batch_first)
     model.to(args.device)
     criterion = nn.MSELoss()  # 定义损失函数
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2))
 
-    close_max, close_min, train_loader, test_loader = getData(args.corpusFile,args.sequence_length,args.batch_size )
+    _, _, train_loader, _ = getData(args.corpusFile, args.sequence_length, args.prediction_length, args.batch_size, args.train_ratio)
     for i in range(args.epochs):
         total_loss = 0
         for idx, (data, label) in enumerate(train_loader):
