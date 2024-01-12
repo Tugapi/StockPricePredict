@@ -1,6 +1,6 @@
 from LSTMModel import lstm
 from dataset import getData
-from parser_my import args
+from options import args
 import torch
 
 

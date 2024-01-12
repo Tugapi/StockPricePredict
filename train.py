@@ -2,7 +2,7 @@ from torch.autograd import Variable
 import torch.nn as nn
 import torch
 from LSTMModel import lstm
-from parser_my import args
+from options import args
 from dataset import getData
 
 def train():

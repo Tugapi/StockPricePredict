@@ -3,7 +3,7 @@ import numpy as np
 from torch.utils.data import DataLoader,Dataset
 import torch
 from torchvision import transforms
-from parser_my import args
+from options import args
 
 #
 def getData(corpusFile,sequence_length,batchSize):
