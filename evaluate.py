@@ -6,7 +6,7 @@ import torch
 
 def eval():
     # model = torch.load(args.save_file)
-    model = LSTM(input_size=args.input_size, hidden_size=args.hidden_size, num_layers=args.layers, output_size=1)
+    model = LSTM(input_size=args.input_size, hidden_size=args.hidden_size, num_layers=args.layers, prediction_length=1)
     model.to(args.device)
     checkpoint = torch.load(args.save_file)
     model.load_state_dict(checkpoint['state_dict'])

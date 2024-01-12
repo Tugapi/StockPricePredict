@@ -7,7 +7,7 @@ from dataset import getData
 
 def train():
 
-    model = LSTM(input_size=args.input_size, hidden_size=args.hidden_size, num_layers=args.layers, output_size=1, dropout=args.dropout, batch_first=args.batch_first)
+    model = LSTM(input_size=args.input_size, hidden_size=args.hidden_size, num_layers=args.layers, prediction_length=args.prediction_length, dropout=args.dropout, batch_first=args.batch_first)
     model.to(args.device)
     criterion = nn.MSELoss()  # 定义损失函数
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2))
