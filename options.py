@@ -14,15 +14,20 @@ parser.add_argument('--hidden_size', default=32, type=int)  # 隐藏层的维度
 parser.add_argument('--lr', default=0.0001, type=float)  # learning rate 学习率
 parser.add_argument('--beta1', default=0.5, type=float)
 parser.add_argument('--beta2', default=0.999, type=float)
-parser.add_argument('--sequence_length', default=5, type=int)  # sequence的长度，默认是用前五天的数据来预测下一天的收盘价
-parser.add_argument('--prediction_length', default=1, type=int)  # 待预测天数，默认1天
+parser.add_argument('--sequence_length', default=40, type=int)  # sequence的长度，用前几天的数据来预测
+parser.add_argument('--prediction_length', default=1, type=int)  # 模型预测天数
 parser.add_argument('--batch_size', default=64, type=int)
 parser.add_argument('--train_ratio', default=0.5, type=float)  # 用于训练的数据比例
+
 parser.add_argument('--useGPU', default=False, type=bool)  # 是否使用GPU
 parser.add_argument('--batch_first', default=True, type=bool)  # 是否将batch_size放在第一维
 parser.add_argument('--dropout', default=0.1, type=float)
 parser.add_argument('--save_file', default='model/stock.pth')  # 模型保存位置
-parser.add_argument('--save_freq', default=20, type=int)
+
+# options for prediction
+parser.add_argument('--used_days', default=100, type=int)  # 开始时已知的天数
+parser.add_argument('--prediction_days', default=30, type=int)  # 要预测的天数
+
 
 
 args = parser.parse_args()
