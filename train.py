@@ -7,6 +7,13 @@ from dataset import getData
 import matplotlib.pyplot as plt
 
 def train():
+    # 保存训练配置
+    argsDict = args.__dict__
+    with open( 'setting.txt', 'w') as f:
+        f.writelines('------------------ start ------------------' + '\n')
+        for eachArg, value in argsDict.items():
+            f.writelines(eachArg + ' : ' + str(value) + '\n')
+        f.writelines('------------------- end -------------------')
 
     model = LSTM(input_size=args.input_size, hidden_size=args.hidden_size, num_layers=args.layers, prediction_length=args.prediction_length, dropout=args.dropout, batch_first=args.batch_first)
     model.to(args.device)
