@@ -3,7 +3,7 @@ import torch
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--corpusFile', default='data/000001SH_index.csv')
+parser.add_argument('--corpusFile', default='data/kedaxunfei.csv')
 
 
 parser.add_argument('--gpu', default=0, type=int)  # gpu 卡号
@@ -17,11 +17,12 @@ parser.add_argument('--beta2', default=0.999, type=float)
 parser.add_argument('--sequence_length', default=5, type=int)  # sequence的长度，默认是用前五天的数据来预测下一天的收盘价
 parser.add_argument('--prediction_length', default=1, type=int)  # 待预测天数，默认1天
 parser.add_argument('--batch_size', default=64, type=int)
-parser.add_argument('--train_ratio', default=0.9, type=float)  # 用于训练的数据比例
+parser.add_argument('--train_ratio', default=0.5, type=float)  # 用于训练的数据比例
 parser.add_argument('--useGPU', default=False, type=bool)  # 是否使用GPU
 parser.add_argument('--batch_first', default=True, type=bool)  # 是否将batch_size放在第一维
 parser.add_argument('--dropout', default=0.1, type=float)
 parser.add_argument('--save_file', default='model/stock.pth')  # 模型保存位置
+parser.add_argument('--save_freq', default=20, type=int)
 
 
 args = parser.parse_args()

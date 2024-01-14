@@ -26,7 +26,7 @@ def getData(filepath, sequence_length, prediction_length, batchsize, train_ratio
     trainx, trainy = X[:int(train_ratio * total_len)], Y[:int(train_ratio * total_len)]
     testx, testy = X[int(train_ratio * total_len):], Y[:int(train_ratio * total_len)]
     train_loader = DataLoader(dataset=Mydataset(trainx, trainy, transform=transforms.ToTensor()), batch_size=batchsize, shuffle=True, drop_last=True)
-    test_loader = DataLoader(dataset=Mydataset(testx, testy), batch_size=batchsize, shuffle=True, drop_last=True)
+    test_loader = DataLoader(dataset=Mydataset(testx, testy), batch_size=batchsize, shuffle=False, drop_last=True)
     return close_max, close_min, train_loader, test_loader
 
 class Mydataset(Dataset):

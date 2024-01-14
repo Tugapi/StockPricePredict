@@ -4,6 +4,7 @@ import torch
 from LSTMModel import LSTM
 from options import args
 from dataset import getData
+import matplotlib.pyplot as plt
 
 def train():
 
@@ -13,32 +14,37 @@ def train():
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2))
 
     _, _, train_loader, _ = getData(args.corpusFile, args.sequence_length, args.prediction_length, args.batch_size, args.train_ratio)
+
+    train_loss = []
     for i in range(args.epochs):
         total_loss = 0
-        for idx, (data, label) in enumerate(train_loader):
+        for (data, label) in train_loader:
             if args.useGPU:
                 data1 = data.squeeze(1).cuda()
                 pred = model(Variable(data1).cuda())
                 # print(pred.shape)
-                pred = pred[1,:,:]
-                label = label.unsqueeze(1).cuda()
+                label = label.squeeze(-1).cuda()
                 # print(label.shape)
             else:
                 data1 = data.squeeze(1)
                 pred = model(Variable(data1))
-                pred = pred[1, :, :]
-                label = label.unsqueeze(1)
+                label = label.squeeze(-1)
             loss = criterion(pred, label)
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
             total_loss += loss.item()
-        print(total_loss)
-        if i % 10 == 0:
-            # torch.save(model, args.save_file)
-            torch.save({'state_dict': model.state_dict()}, args.save_file)
-            print('第%d epoch，保存模型' % i)
-    # torch.save(model, args.save_file)
+        print("%d epoch，total_loss: %f" % (i, total_loss))
+        train_loss.append(total_loss)
     torch.save({'state_dict': model.state_dict()}, args.save_file)
+    print('保存模型')
+    # 绘制损失函数
+    plt.figure()
+    plt.plot(train_loss, 'b', label='train_loss')
+    plt.ylabel('train_loss')
+    plt.xlabel('epoch_num')
+    plt.legend()
+    plt.savefig("img/train_loss.jpg")
 
-train()
+if __name__ == '__main__':
+    train()
