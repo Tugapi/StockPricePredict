@@ -17,7 +17,7 @@ def getData(filepath, sequence_length, prediction_length, batchsize, train_ratio
 
     X=[]
     Y=[]
-    for i in range(df.shape[0] - sequence_length):
+    for i in range(df.shape[0] - sequence_length - prediction_length):
         X.append(np.array(df.iloc[i:(i + sequence_length), ].values, dtype=np.float32))
         Y.append(np.array(df.iloc[(i + sequence_length):(i + sequence_length + prediction_length), ].values, dtype=np.float32)
 )
